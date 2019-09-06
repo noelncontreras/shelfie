@@ -1,0 +1,24 @@
+.form-section {
+    width: 20vw;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3ad886;
+}
+.input-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+img {
+    width: 5vw;
+    height: 8vh;
+}
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
