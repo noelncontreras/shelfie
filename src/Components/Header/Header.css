@@ -3,10 +3,19 @@
     width: 100vw;
     height: 8vh;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     background-color: #ab2a19;
     color: white;
+}
+.logo-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo-title > img {
+    width: 3vw;
+    height: 5vh;
 }
 button {
     background-color: #ed6b5a;

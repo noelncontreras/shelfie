@@ -10,10 +10,16 @@ export default class Form extends Component {
             productname: "",
             price: 0
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
-    handleChange = e => {
+    handleChange(e) {
         this.setState({[e.target.name]: e.target.value})
+    }
+
+    handleCancel() {
+        
     }
 
     render() {
@@ -42,7 +48,7 @@ export default class Form extends Component {
                     onChange={this.handleChange}/>
                 </div>
                 <div className="form-buttons">
-                    <button>Cancel</button>
+                    <button onClick={() => this.handleCancel()}>Cancel</button>
                     <button>Add to Inventory</button>
                 </div>
             </section>
