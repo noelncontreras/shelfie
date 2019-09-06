@@ -15,6 +15,7 @@ export default class App extends Component {
     this.state = {
       inventory: []
     }
+    // this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +24,9 @@ export default class App extends Component {
       .then(response => this.setState({inventory: response.data}))
       .catch(error => alert(`You have an ${error}`))
   }
+
+//i had a prop on FORM below: getRequest={this.componentDidMount}. i dont think
+//this works. i could not finish the axios POST and test it all out.
 
   render() {
     return (

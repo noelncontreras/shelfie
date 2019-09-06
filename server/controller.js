@@ -10,7 +10,14 @@ module.exports = {
             })
     },
     create: (req, res, next) => {
+        const dbInstance = req.app.get("db");
         const {name, price, img} = req.body;
-        res.status(200).send(`I got something!`)
+
+        dbInstance.create_product([name, price, img])
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                res.status(500).send({errorMessage: "Something went wrong."})
+                console.log(err)
+            })
     }
 }

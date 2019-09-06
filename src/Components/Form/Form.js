@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+// import axios from "axios";
 
 import "./Form.css";
 
 export default class Form extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             imageUrl: "",
             productName: "",
@@ -12,12 +13,29 @@ export default class Form extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
+        // this.handleAdd = this.handleAdd.bind(this);
     }
 
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value})
     }
+    //I couldn't finish this!!! i stopped on step 1 - part 6.
+    // handleAdd() {
+    //     axios.post("/api/product", {
+    //         name: this.state.productName,
+    //         price: this.state.price,
+    //         img: this.state.imageUrl
+    //     }).then(response => {
+    //         this.setState({this.props.getRequest})
+    //     })
+    // }
 
+    //David or Eric:
+    //below handleCancel does not work. I'm sure it's an easy fix, but I couldnt get it
+    //didnt want to spend more time on it when i can do other stuff.
+    //I think using a FORM to make input fields would work better in this case...
+
+    //i had an onClick on "add to Inventory": onClick={() => this.handleAdd()}
     handleCancel() {
         this.setState({imageUrl: "", productName: "", price: 0});
     }
