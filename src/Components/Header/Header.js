@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import {Link} from "react-router-dom";
 
 import "./Header.css";
 
-export default class Header extends Component {
-    constructor() {
-        super();
-        this.state = {
+export default function Header() {
+    // constructor() {
+    //     super();
+    //     this.state = {
 
-        }
-    }
+    //     }
+    // }
 
-    render() {
+
         return (
             <>
                 <header className ="header-bar">
@@ -28,5 +28,4 @@ export default class Header extends Component {
                 </header>
             </>
         )
-    }
 }

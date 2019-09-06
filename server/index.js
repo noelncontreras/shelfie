@@ -17,6 +17,8 @@ massive(CONNECTION_STRING)
 app.use(express.json());
 
 //put endpoints below
+app.get("/api/inventory", controller.getAll);
+app.post("/api/product", controller.create);
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port ${SERVER_PORT}`);

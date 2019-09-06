@@ -7,7 +7,7 @@ export default class Form extends Component {
         super();
         this.state = {
             imageUrl: "",
-            productname: "",
+            productName: "",
             price: 0
         }
         this.handleChange = this.handleChange.bind(this);
@@ -19,7 +19,7 @@ export default class Form extends Component {
     }
 
     handleCancel() {
-        
+        this.setState({imageUrl: "", productName: "", price: 0});
     }
 
     render() {
