@@ -21,8 +21,8 @@ export default function Header() {
                     </div>
                     <nav>
                         <div className="header-links">
-                            <Link to='/'><button>Dashboard</button></Link>
-                            <Link to='/add'><button>Add Inventory</button></Link>
+                            <Link to="/"><button>Dashboard</button></Link>
+                            <Link to="/add"><button>Add Inventory</button></Link>
                         </div>
                     </nav>
                 </header>

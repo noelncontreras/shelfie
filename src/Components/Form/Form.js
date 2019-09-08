@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-// import axios from "axios";
+import {Link} from "react-router-dom";
+import axios from "axios";
 
 import "./Form.css";
 
@@ -8,36 +9,48 @@ export default class Form extends Component {
         super(props);
         this.state = {
             imageUrl: "",
-            productName: "",
+            product_name: "",
             price: 0
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
-        // this.handleAdd = this.handleAdd.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps!== this.props) {
+            this.setState({imageUrl: "", product_name: "", price: 0})
+        }
     }
 
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value})
     }
-    //I couldn't finish this!!! i stopped on step 1 - part 6.
-    // handleAdd() {
-    //     axios.post("/api/product", {
-    //         name: this.state.productName,
-    //         price: this.state.price,
-    //         img: this.state.imageUrl
-    //     }).then(response => {
-    //         this.setState({this.props.getRequest})
-    //     })
-    // }
+
+    handleAdd() {
+        // let {product_name, price, imageUrl} = this.state; <--can use to destructure
+        axios
+        .post("/api/product", {
+            product_name: this.state.product_name,
+            price: this.state.price,
+            img: this.state.imageUrl
+        })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(err => {
+            alert(`Something went wrong.`)
+        })
+    }
 
     //David or Eric:
     //below handleCancel does not work. I'm sure it's an easy fix, but I couldnt get it
-    //didnt want to spend more time on it when i can do other stuff.
+    //didn't want to spend more time on it when i can do other stuff.
     //I think using a FORM to make input fields would work better in this case...
 
-    //i had an onClick on "add to Inventory": onClick={() => this.handleAdd()}
+    //cancel button does not work
     handleCancel() {
-        this.setState({imageUrl: "", productName: "", price: 0});
+        this.setState({imageUrl: "", product_name: "", price: 0});
     }
 
     render() {
@@ -49,25 +62,28 @@ export default class Form extends Component {
                 <div className="input-box">
                     <label>Image URL:</label>
                     <input 
-                    name="imageUrl" 
+                    name="imageUrl"
+                    value={this.state.imageUrl}
                     placeholder="Image URL" 
                     onChange={this.handleChange}/>
                     <br />
                     <label>Product Name:</label>
                     <input 
-                    name="productName" 
+                    value={this.state.product_name}
+                    name="product_name" 
                     placeholder="Product Name" 
                     onChange={this.handleChange}/>
                     <br />
                     <label>Price:</label>
                     <input 
+                    value={this.state.price}
                     name="price" 
                     placeholder="Price" 
                     onChange={this.handleChange}/>
                 </div>
                 <div className="form-buttons">
-                    <button onClick={() => this.handleCancel()}>Cancel</button>
-                    <button>Add to Inventory</button>
+                    <Link to="/"><button onClick={this.handleCancel}>Cancel</button></Link>
+                    <Link to="/"><button onClick={this.handleAdd}>{this.props.match.params.id ? "Edit Item" : "Add to Inventory"}</button></Link>
                 </div>
             </section>
         )
