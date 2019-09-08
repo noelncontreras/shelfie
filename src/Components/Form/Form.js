@@ -8,18 +8,33 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageUrl: "",
-            product_name: "",
+            img: "",
+            name: "",
             price: 0
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
+        // this.handleAdd = this.handleAdd.bind(this);
+    }
+
+    componentDidMount() {
+        if(this.props.match.params) {
+            const {id} = this.props.match.params;
+            axios
+                .get(`/api/products/${id}`)
+                .then(response => {
+                    this.setState({
+                        img: response.data[0].img, 
+                        name: response.data[0].name, 
+                        price: response.data[0].price
+                    })
+                })
+        }
     }
 
     componentDidUpdate(prevProps) {
         if(prevProps!== this.props) {
-            this.setState({imageUrl: "", product_name: "", price: 0})
+            this.setState({img: "", name: "", price: 0})
         }
     }
 
@@ -27,30 +42,39 @@ export default class Form extends Component {
         this.setState({[e.target.name]: e.target.value})
     }
 
-    handleAdd() {
-        // let {product_name, price, imageUrl} = this.state; <--can use to destructure
+    // handleAdd() {
+    //     // let {product_name, price, imageUrl} = this.state; <--can use to destructure
+    //     axios
+    //     .post("/api/product", {
+    //         product_name: this.state.product_name,
+    //         price: this.state.price,
+    //         img: this.state.imageUrl
+    //     })
+    //     .then(response => {
+    //         console.log(response)
+    //     })
+    //     .catch(err => {
+    //         alert(`Something went wrong.`)
+    //     })
+    // }
+
+    handleAddOrEdit = () => {
+        const {img, name, price} = this.state;
+        if (this.props.match.params.id){
+            const {id} = this.props.match.params;
+            let editedItem = {img: img, name: name, price: price}
         axios
-        .post("/api/product", {
-            product_name: this.state.product_name,
-            price: this.state.price,
-            img: this.state.imageUrl
-        })
-        .then(response => {
-            console.log(response)
-        })
-        .catch(err => {
-            alert(`Something went wrong.`)
-        })
+            .put(`/api/product/${id}`, editedItem)
+        } else {
+            let addedItem = {img: img, name: name, price: price}
+        axios
+            .post("/api/product", addedItem)
+            this.handleCancel()
+        }
     }
 
-    //David or Eric:
-    //below handleCancel does not work. I'm sure it's an easy fix, but I couldnt get it
-    //didn't want to spend more time on it when i can do other stuff.
-    //I think using a FORM to make input fields would work better in this case...
-
-    //cancel button does not work
     handleCancel() {
-        this.setState({imageUrl: "", product_name: "", price: 0});
+        this.setState({img: "", name: "", price: 0});
     }
 
     render() {
@@ -62,15 +86,15 @@ export default class Form extends Component {
                 <div className="input-box">
                     <label>Image URL:</label>
                     <input 
-                    name="imageUrl"
-                    value={this.state.imageUrl}
+                    name="img"
+                    value={this.state.img}
                     placeholder="Image URL" 
                     onChange={this.handleChange}/>
                     <br />
                     <label>Product Name:</label>
                     <input 
-                    value={this.state.product_name}
-                    name="product_name" 
+                    value={this.state.name}
+                    name="name" 
                     placeholder="Product Name" 
                     onChange={this.handleChange}/>
                     <br />
@@ -82,8 +106,8 @@ export default class Form extends Component {
                     onChange={this.handleChange}/>
                 </div>
                 <div className="form-buttons">
-                    <Link to="/"><button onClick={this.handleCancel}>Cancel</button></Link>
-                    <Link to="/"><button onClick={this.handleAdd}>{this.props.match.params.id ? "Edit Item" : "Add to Inventory"}</button></Link>
+                    <button onClick={this.handleCancel}>Cancel</button>
+                    <Link to="/"><button onClick={this.handleAddOrEdit}>{this.props.match.params.id ? "Edit Item" : "Add to Inventory"}</button></Link>
                 </div>
             </section>
         )

@@ -30,17 +30,28 @@ export default class Dashboard extends Component {
             })
     }
 
+    handleEdit = id => {
+        axios
+            .put(`/api/product/${id}`);
+        axios
+            .get("api/inventory")
+            .then(response => {
+                this.setState({inventory: response.data})
+            })
+    }
+
     render() {
         return (
             <div className="dashboard-items">
                 {this.state.inventory.map(item => {
                     return (
                         <Product
-                            url={item.img}
+                            img={item.img}
                             name={item.name}
                             price={item.price}
                             id={item.id}
                             handleDelete={this.handleDelete}
+                            handleEdit = {this.handleEdit}
                             key={item.id} />
                     )
                 })}

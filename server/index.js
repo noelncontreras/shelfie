@@ -20,6 +20,7 @@ app.use(express.json());
 app.get("/api/inventory", controller.getAll);
 app.post("/api/product", controller.create);
 app.delete("/api/product/:id", controller.delete);
+app.put("/api/product/:id", controller.edit)
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port ${SERVER_PORT}`);

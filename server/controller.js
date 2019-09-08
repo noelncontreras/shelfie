@@ -25,9 +25,21 @@ module.exports = {
         const {id} = req.params;
 
         dbInstance.delete_product(id)
-        .then(() => res.sendStatus(200))
-        .catch(err => {
-            res.status(500).send({errorMessage: "Something went wrong in delete-node.js"})
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                res.status(500).send({ errorMessage: "Something went wrong in delete-node.js" })
+            console.log(err)
+        })
+    },
+    edit: (req, res, next) => {
+        const dbInstance = req.app.get("db");
+        const {name, price, img} = req.body;
+        const {id} = req.params;
+
+        dbInstance.edit_product(id, name, price, img)
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                res.status(500).send({errorMessage: "Something went wrong in edit-node.js"})
             console.log(err)
         })
     }
